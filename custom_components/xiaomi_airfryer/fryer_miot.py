@@ -10,7 +10,7 @@ import click
 from miio.click_common import command, format_output
 from miio.device import DeviceStatus
 from miio.miot_device import MiotDevice
-from const import (
+from .const import (
     MODEL_FRYER_MAF01,
     MODEL_FRYER_MAF02,
     MODEL_FRYER_MAF03,
