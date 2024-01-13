@@ -1,0 +1,83 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Устройство уже настроено",
+            "already_in_progress": "Настройка устройства уже в процессе",
+            "incomplete_info": "Неполная информация для настройки устройства, не указан хост или токен.",
+            "not_xiaomi_miio": "Устройство (пока) не поддерживается Xiaomi Miio.",
+            "reauth_successful": "Переаутентификация прошла успешно"
+        },
+        "error": {
+            "cannot_connect": "Не удалось подключиться",
+            "cloud_credentials_incomplete": "Учетные данные неполные, пожалуйста, заполните имя пользователя, пароль и страну",
+            "cloud_login_error": "Не удалось войти в облако Xiaomi Miio, проверьте учетные данные.",
+            "cloud_no_devices": "В этом аккаунте Xiaomi Miio не найдено устройств.",
+            "no_device_selected": "Устройство не выбрано, пожалуйста, выберите одно устройство.",
+            "unknown_device": "Модель устройства неизвестна, не удается настроить устройство.",
+            "wrong_token": "Ошибка контрольной суммы, неверный токен"
+        },
+        "flow_title": "{name}",
+        "step": {
+            "cloud": {
+                "data": {
+                    "cloud_country": "Регион",
+                    "cloud_password": "Пароль",
+                    "cloud_username": "Имя пользователя",
+                    "manual": "Настроить вручную (не рекомендуется)"
+                },
+                "description": "Войдите в облако Xiaomi Miio, см. https://www.openhab.org/addons/bindings/miio/#country-servers для использования облачного сервера.",
+                "title": "Подключение к Xiaomi Miio AirFryer"
+            },
+            "connect": {
+                "data": {
+                    "model": "Модель устройства"
+                },
+                "description": "Вручную выберите модель устройства из поддерживаемых моделей.",
+                "title": "Подключение к Xiaomi Miio AirFryer"
+            },
+            "device": {
+                "data": {
+                    "host": "IP-адрес",
+                    "model": "Модель устройства (необязательно)",
+                    "name": "Название устройства",
+                    "token": "Токен API"
+                },
+                "description": "Вам понадобится 32-значный токен API, см. https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-the-access-token для инструкций. Обратите внимание, что этот токен API отличается от ключа, используемого в интеграции Xiaomi Aqara.",
+                "title": "Подключение к Xiaomi Miio AirFryer"
+            },
+            "manual": {
+                "data": {
+                    "host": "IP-адрес",
+                    "token": "Токен API"
+                },
+                "description": "Вам понадобится 32-значный токен API, см. https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-the-access-token для инструкций. Обратите внимание, что этот токен API отличается от ключа, используемого в интеграции Xiaomi Aqara.",
+                "title": "Подключение к Xiaomi AirFryer"
+            },
+            "reauth_confirm": {
+                "description": "Интеграция Xiaomi Miio требует повторной аутентификации вашей учетной записи для обновления токенов или добавления недостающих облачных учетных данных.",
+                "title": "Повторная аутентификация интеграции"
+            },
+            "select": {
+                "data": {
+                    "select_device": "Xiaomi AirFryer"
+                },
+                "description": "Выберите Xiaomi AirFryer для настройки.",
+                "title": "Подключение к Xiaomi AirFryer"
+            }
+        }
+    },
+    "options": {
+        "error": {
+            "cloud_credentials_incomplete": "Учетные данные неполные, пожалуйста, заполните имя пользователя, пароль и страну"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "cloud_subdevices": "Использовать облако для подключения субустройств"
+                },
+                "description": "Укажите дополнительные настройки",
+                "title": "Xiaomi AirFryer"
+            }
+        }
+    }
+}

@@ -17,7 +17,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
     CONF_DEVICE,
     CONF_MAC,
-    CONF_MODEL
+    CONF_MODEL,
 )
 
 from homeassistant.components.xiaomi_miio.const import (
@@ -28,16 +28,12 @@ from homeassistant.components.xiaomi_miio.const import (
     CONF_MANUAL,
     DEFAULT_CLOUD_COUNTRY,
     SERVER_COUNTRY_CODES,
-#    AuthException,
-#    SetupException
+    #    AuthException,
+    #    SetupException
 )
 from homeassistant.components.xiaomi_miio.device import ConnectXiaomiDevice
 
-from .const import (
-    DOMAIN,
-    DEFAULT_SCAN_INTERVAL,
-    MODELS_ALL_DEVICES
-)
+from .const import DOMAIN, DEFAULT_SCAN_INTERVAL, MODELS_ALL_DEVICES
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -56,6 +52,7 @@ DEVICE_CLOUD_CONFIG = vol.Schema(
         vol.Optional(CONF_MANUAL, default=False): bool,
     }
 )
+
 
 # Exceptions
 class AuthException(Exception):
@@ -102,7 +99,9 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             {
                 vol.Optional(
                     CONF_SCAN_INTERVAL,
-                    default=self.config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+                    default=self.config_entry.options.get(
+                        CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                    ),
                 ): int
             }
         )
@@ -256,7 +255,7 @@ class XiaomiAirFryerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
             self.cloud_devices = {}
             for device in devices_raw:
-                if device['model'] in MODELS_ALL_DEVICES:
+                if device["model"] in MODELS_ALL_DEVICES:
                     parent_id = device.get("parent_id")
                     if not parent_id:
                         name = device["name"]
