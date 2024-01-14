@@ -33,7 +33,7 @@ from homeassistant.components.xiaomi_miio.const import (
 )
 from homeassistant.components.xiaomi_miio.device import ConnectXiaomiDevice
 
-from .const import DOMAIN, DEFAULT_SCAN_INTERVAL, MODELS_ALL_DEVICES
+from .const import DOMAIN, DEFAULT_SCAN_INTERVAL, MODEL_FRYER_MAF01
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -41,7 +41,7 @@ DEVICE_SETTINGS = {
     vol.Required(CONF_TOKEN): vol.All(str, vol.Length(min=32, max=32)),
 }
 DEVICE_CONFIG = vol.Schema({vol.Required(CONF_HOST): str}).extend(DEVICE_SETTINGS)
-DEVICE_MODEL_CONFIG = vol.Schema({vol.Required(CONF_MODEL): vol.In(MODELS_ALL_DEVICES)})
+DEVICE_MODEL_CONFIG = vol.Schema({vol.Required(CONF_MODEL): vol.In(MODEL_FRYER_MAF01)})
 DEVICE_CLOUD_CONFIG = vol.Schema(
     {
         vol.Optional(CONF_CLOUD_USERNAME): str,
@@ -182,17 +182,16 @@ class XiaomiAirFryerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         self.mac = format_mac(self.mac)
 
-        for device_model in MODELS_ALL_DEVICES:
-            if name.startswith(device_model.replace(".", "-")):
-                unique_id = self.mac
-                await self.async_set_unique_id(unique_id)
-                self._abort_if_unique_id_configured({CONF_HOST: self.host})
+        if name.startswith(MODEL_FRYER_MAF01.replace(".", "-")):
+            unique_id = self.mac
+            await self.async_set_unique_id(unique_id)
+            self._abort_if_unique_id_configured({CONF_HOST: self.host})
 
-                self.context.update(
-                    {"title_placeholders": {"name": f"{device_model} {self.host}"}}
-                )
+            self.context.update(
+                {"title_placeholders": {"name": f"{MODEL_FRYER_MAF01} {self.host}"}}
+            )
 
-                return await self.async_step_cloud()
+            return await self.async_step_cloud()
 
         # Discovered device is not yet supported
         _LOGGER.debug(
@@ -255,7 +254,7 @@ class XiaomiAirFryerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
             self.cloud_devices = {}
             for device in devices_raw:
-                if device["model"] in MODELS_ALL_DEVICES:
+                if device["model"] in MODEL_FRYER_MAF01:
                     parent_id = device.get("parent_id")
                     if not parent_id:
                         name = device["name"]
@@ -378,9 +377,8 @@ class XiaomiAirFryerFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         flow_type = None
         if flow_type is None:
-            for device_model in MODELS_ALL_DEVICES:
-                if self.model.startswith(device_model):
-                    flow_type = CONF_DEVICE
+            if self.model.startswith(MODEL_FRYER_MAF01):
+                flow_type = CONF_DEVICE
 
         if flow_type is not None:
             return self.async_create_entry(

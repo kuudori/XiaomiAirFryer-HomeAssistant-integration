@@ -100,7 +100,7 @@ recipe_id:
       selector:
         select:
           options:
-            - 'M0'
+            - ""
             - 'M1'
             - 'M2'
             - 'M3'

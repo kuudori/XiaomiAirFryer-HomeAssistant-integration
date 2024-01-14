@@ -20,7 +20,7 @@ from homeassistant.const import (
     CONF_NAME,
     CONF_TOKEN,
     CONF_DEVICE,
-    CONF_MAC
+    CONF_MAC,
 )
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import device_registry as dr
@@ -53,7 +53,7 @@ from .const import (
     SERVICE_TARGET_TIME,
     SERVICE_TARGET_TEMPERATURE,
     SERVICE_RECIPE_ID,
-    SERVICE_RESUME
+    SERVICE_RESUME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -70,7 +70,7 @@ MODE_MAF = {
     "Cooking": 4,
     "Preheat": 5,
     "Cooked": 6,
-    "PreheatFinish": 7
+    "PreheatFinish": 7,
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -89,8 +89,20 @@ FEATURE_FLAGS_GENERIC = 0
 SERVICE_SCHEMA = vol.Schema({vol.Optional(ATTR_ENTITY_ID): cv.entity_ids})
 
 SERVICE_SCHEMA_START_CUSTOM = SERVICE_SCHEMA.extend(
-    {vol.Required(ATTR_MODE): vol.All(vol.In(
-        ["Standby", "Appointment", "Cooking", "Preheat", "Cooked", "PreheatFinish"]))}
+    {
+        vol.Required(ATTR_MODE): vol.All(
+            vol.In(
+                [
+                    "Standby",
+                    "Appointment",
+                    "Cooking",
+                    "Preheat",
+                    "Cooked",
+                    "PreheatFinish",
+                ]
+            )
+        )
+    }
 )
 
 SERVICE_SCHEMA_APPOINT_TIME = SERVICE_SCHEMA.extend(
@@ -141,7 +153,7 @@ SERVICE_TO_METHOD = {
     SERVICE_TARGET_TEMPERATURE: {
         "method": "async_target_temperature",
         "schema": SERVICE_SCHEMA_TARGET_TEMPERATURE,
-    }
+    },
 }
 
 
@@ -203,8 +215,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 ]
             else:
                 devices = [
-                    device[DATA_DEVICE]
-                    for device in hass.data[DATA_KEY].values()
+                    device[DATA_DEVICE] for device in hass.data[DATA_KEY].values()
                 ]
 
             update_tasks = []
@@ -240,7 +251,8 @@ class XiaomiAirFryer(SwitchEntity):
         self._host = entry.options[CONF_HOST]
         self._attr_name = name
         self._attr_unique_id = "{}.{}-{}".format(
-            DOMAIN, unique_id, name.lower().replace(" ", "-"))
+            DOMAIN, unique_id, name.lower().replace(" ", "-")
+        )
         self._device_id = unique_id
         self._model = entry.options[CONF_MODEL]
         self._mac = entry.options[CONF_MAC]
@@ -248,9 +260,7 @@ class XiaomiAirFryer(SwitchEntity):
         self._device_features = FEATURE_FLAGS_GENERIC
         self._skip_update = False
 
-        self.entity_id = ENTITY_ID_FORMAT.format(
-            "{}_{}".format(DOMAIN, slugify(name))
-        )
+        self.entity_id = ENTITY_ID_FORMAT.format("{}_{}".format(DOMAIN, slugify(name)))
 
     @property
     def icon(self):
